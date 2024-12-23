@@ -111,6 +111,7 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "net.gotev:uploadservice-okhttp:4.7.0"
 }
 
 if (isNewArchitectureEnabled()) {
