@@ -34,7 +34,7 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
   NativeUploaderProgressSpec(reactContext), LifecycleEventListener {
 
   private val CONTEXT = "RN_UPLOADER"
-  private var notificationChannelID = "uploads"
+  private var notificationChannelID = "BackgroundUploadChannel"
   private var isGlobalRequestObserver = false
 
   override fun getName(): String {
@@ -209,7 +209,8 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
     }
 
     createNotificationChannel()
-
+    Log.d(CONTEXT, "Notification channel created")
+    Log.i(CONTEXT, "Application ${application.packageName} is in debug mode: ${BuildConfig.DEBUG}")
     initialize(application, notificationChannelID, BuildConfig.DEBUG)
 
     if(!isGlobalRequestObserver) {
@@ -256,17 +257,17 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
           success = UploadNotificationStatusConfig(
             title = notification.getString("onSuccessTitle") ?: "Upload Success",
             message = notification.getString("onSuccessMessage") ?: "Upload success",
-            autoClear = notification.hasKey("successAutoClear") && notification.getBoolean("successAutoClear")
+            autoClear = notification.hasKey("autoClear") && notification.getBoolean("autoClear")
           ),
           error = UploadNotificationStatusConfig(
             title = notification.getString("onErrorTitle") ?: "Upload Error",
             message = notification.getString("onErrorMessage") ?: "Upload error",
-            autoClear = notification.hasKey("errorAutoClear") && notification.getBoolean("errorAutoClear")
+            autoClear = notification.hasKey("autoClear") && notification.getBoolean("autoClear")
           ),
           cancelled = UploadNotificationStatusConfig(
             title = notification.getString("onCancelledTitle") ?: "Upload Cancelled",
             message = notification.getString("onCancelledMessage") ?: "Upload cancelled",
-            autoClear = notification.hasKey("cancelledAutoClear") && notification.getBoolean("cancelledAutoClear")
+            autoClear = notification.hasKey("autoClear") && notification.getBoolean("autoClear")
           )
         )
         request.setNotificationConfig{_, _ ->

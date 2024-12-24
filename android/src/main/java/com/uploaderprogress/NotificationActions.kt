@@ -5,7 +5,7 @@ import android.content.Context
 import android.app.PendingIntent
 
 class NotificationActions {
-  var INTENT_ACTION = "com.uploaderprogress.NOTIFICATION_ACTION"
+  var INTENT_ACTION = "com.uploaderprogress.notification.action"
 
   val PARAM_ACTION = "action"
   val PARAM_UPLOAD_ID = "uploadId"

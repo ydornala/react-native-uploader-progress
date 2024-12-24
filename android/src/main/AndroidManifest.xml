@@ -1,3 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.uploaderprogress">
+          <receiver
+    android:name="net.gotev.uploadservice.receivers.UploadReceiver"
+    android:exported="false" />
+<receiver
+    android:name=".NotificationActionsReceiver"
+    android:exported="false" />
+
 </manifest>

@@ -5,6 +5,7 @@ export type UploadEvent = 'progress' | 'error' | 'completed' | 'cancelled';
 
 export type NotificationArgs = {
   enabled: boolean;
+  autoClear?: boolean;
 };
 
 export type TStartUpload = {

@@ -21,13 +21,14 @@ export default function App() {
     media?.assets?.forEach((asset) => {
       getFileInfo(asset.originalPath || '').then(() => {
         startUpload({
-          url: 'http://192.168.0.177:3080/upload',
+          url: 'https://335b-103-211-43-38.ngrok-free.app/upload',
           path: asset.originalPath || '',
           method: 'POST',
           type: 'multipart',
           field: 'file',
           notification: {
             enabled: true,
+            autoClear: true,
           },
         }).then((uploadId) => {
           console.log('res upload: ', uploadId);

@@ -12,10 +12,11 @@ import com.facebook.react.modules.core.DeviceEventManagerModule
 
 import net.gotev.uploadservice.UploadService
 
-class NotificationActionsReceiver: BroadcastReceiver() {
+class NotificationActionsReceiver : BroadcastReceiver() {
     private val TAG = "NotificationActionsReceiver"
 
     override fun onReceive(context: Context?, intent: Intent?) {
+      Log.e("ON_RECEIVE", "Received notification action: ${intent?.action}")
       if(intent == null || NotificationActions().INTENT_ACTION == intent.action) {
         return
       }
