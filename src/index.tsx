@@ -1,3 +1,4 @@
+import { DeviceEventEmitter, NativeModules } from 'react-native';
 import UploaderProgress from './NativeUploaderProgress';
 
 export type UploadEvent = 'progress' | 'error' | 'completed' | 'cancelled';
@@ -21,6 +22,16 @@ export type TStartUpload = {
   notification?: NotificationArgs;
 };
 
+const NativeModule = NativeModules.UploaderProgress;
+const eventPrefix = 'UploaderProgress-';
+
+if (NativeModule) {
+  NativeModule.addListener(eventPrefix + 'progress');
+  NativeModule.addListener(eventPrefix + 'error');
+  NativeModule.addListener(eventPrefix + 'completed');
+  NativeModule.addListener(eventPrefix + 'cancelled');
+}
+
 export function multiply(a: number, b: number): number {
   return UploaderProgress.multiply(a, b);
 }
@@ -36,3 +47,15 @@ export function getFileInfo(path: string): Promise<File> {
 export function startUpload(options: TStartUpload): Promise<string> {
   return UploaderProgress.startUpload(options);
 }
+
+export const addListener = (
+  eventType: UploadEvent,
+  uploadId: string,
+  listener: Function
+) => {
+  return DeviceEventEmitter.addListener(eventPrefix + eventType, (data) => {
+    if (!uploadId || !data || !data.id || data.id === uploadId) {
+      listener(data);
+    }
+  });
+};

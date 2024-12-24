@@ -10595,6 +10595,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-picker@npm:^7.2.3":
+  version: 7.2.3
+  resolution: "react-native-image-picker@npm:7.2.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 96d67516e8e1c1768c593ca1b0a507d5212d8ac5df2610ad9d6f38c188b8d0720966559867849f74b6c19d2500664ce17c907e5fa37ab72487abd363cf493e7d
+  languageName: node
+  linkType: hard
+
 "react-native-uploader-progress-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "react-native-uploader-progress-example@workspace:example"
@@ -10611,6 +10621,7 @@ __metadata:
     react: 18.3.1
     react-native: 0.76.5
     react-native-builder-bob: ^0.32.0
+    react-native-image-picker: ^7.2.3
   languageName: unknown
   linkType: soft
 

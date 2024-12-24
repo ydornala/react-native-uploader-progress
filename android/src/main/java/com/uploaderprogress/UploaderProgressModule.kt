@@ -35,7 +35,7 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
 
   private val CONTEXT = "RN_UPLOADER"
   private var notificationChannelID = "uploads"
-  private var isGloabalRequestObserver = false
+  private var isGlobalRequestObserver = false
 
   override fun getName(): String {
     return NAME
@@ -212,9 +212,9 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
 
     initialize(application, notificationChannelID, BuildConfig.DEBUG)
 
-    if(!isGloabalRequestObserver) {
-      isGloabalRequestObserver = true
-      // GlobalRequestObserver(application, GlobalRequestObserverDelegate(reactContext))
+    if(!isGlobalRequestObserver) {
+      isGlobalRequestObserver = true
+      GlobalRequestObserver(application, GlobalRequestObserverDelegate(reactContext))
     }
 
     val url = options.getString("url")
