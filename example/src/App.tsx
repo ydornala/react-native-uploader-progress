@@ -27,7 +27,7 @@ export default function App() {
           type: 'multipart',
           field: 'file',
           notification: {
-            enabled: true,
+            enabled: false,
             autoClear: true,
           },
         }).then((uploadId) => {

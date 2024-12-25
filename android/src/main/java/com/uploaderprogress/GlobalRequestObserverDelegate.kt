@@ -2,6 +2,8 @@ package com.uploaderprogress
 
 import android.util.Log
 import android.content.Context
+import android.app.NotificationManager
+import androidx.core.app.NotificationCompat
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
@@ -16,7 +18,7 @@ class GlobalRequestObserverDelegate(
   reactContext: ReactApplicationContext,
 ) : RequestObserverDelegate {
   private val TAG = "UploadReceiver"
-
+  private val notificationManager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   private var reactContext: ReactApplicationContext = reactContext
 
   override fun onCompleted(context: Context, uploadInfo: UploadInfo) {
@@ -41,10 +43,19 @@ class GlobalRequestObserverDelegate(
   }
 
   override fun onProgress(context: Context, uploadInfo: UploadInfo) {
+
+     val progress = uploadInfo.progressPercent
+        val notification = NotificationCompat.Builder(context, "UploadChannel")
+            .setContentTitle("Uploading...")
+            .setContentText("$progress% uploaded")
+            .setSmallIcon(android.R.drawable.stat_sys_upload)
+            .setProgress(100, progress, false)
+            .build()
+    notificationManager.notify(uploadInfo.uploadId.hashCode(), notification)
+
     val params = Arguments.createMap()
     params.putString("id", uploadInfo.uploadId)
     params.putInt("progress", uploadInfo.progressPercent)
-
     sendEvent("progress", params, context)
   }
 
