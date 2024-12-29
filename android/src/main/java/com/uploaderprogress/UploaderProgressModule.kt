@@ -245,10 +245,10 @@ class UploaderProgressModule(val reactContext: ReactApplicationContext) :
       request.setMethod(method!!)
         .setMaxRetries(maxRetries)
 
-      if(notification.getBoolean("enabled")) {
+      if(notification.getBoolean("enabled") && false) {
         val notificationConfig = UploadNotificationConfig(
           notificationChannelId = notificationChannelID,
-          isRingToneEnabled = true,
+          isRingToneEnabled = false,
           progress = UploadNotificationStatusConfig(
             title = notification.getString("onProgressTitle") ?: "Uploading",
             message = notification.getString("onProgressMessage") ?: "Uploading in progress",

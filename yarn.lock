@@ -2666,6 +2666,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/progress-bar-android@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@react-native-community/progress-bar-android@npm:1.0.5"
+  peerDependencies:
+    react: ">=16.8.6"
+    react-native: ">=0.60.0"
+  checksum: 73e3016bedc53bbc6e8e2f2bc5003d8080c15f009a4fc651c258f423275cb9eab4e0706b3e3f31f489cddc64bda118cdcbc271a7e9081491bdba6488bf468683
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.76.5":
   version: 0.76.5
   resolution: "@react-native/assets-registry@npm:0.76.5"
@@ -10615,6 +10625,7 @@ __metadata:
     "@react-native-community/cli": 15.0.1
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1
+    "@react-native-community/progress-bar-android": ^1.0.5
     "@react-native/babel-preset": 0.76.5
     "@react-native/metro-config": 0.76.5
     "@react-native/typescript-config": 0.76.5
@@ -10622,6 +10633,7 @@ __metadata:
     react-native: 0.76.5
     react-native-builder-bob: ^0.32.0
     react-native-image-picker: ^7.2.3
+    react-native-uuid: ^2.0.3
   languageName: unknown
   linkType: soft
 
@@ -10654,6 +10666,13 @@ __metadata:
     react-native: "*"
   languageName: unknown
   linkType: soft
+
+"react-native-uuid@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "react-native-uuid@npm:2.0.3"
+  checksum: e47774481feaed5d38f75fb4b03f5189c03e7452038f1b0fa56677add8a8bdef64ec7ad5e83f9fa761d8788cac5c8e554ade07e82a2818145337df7c883e2124
+  languageName: node
+  linkType: hard
 
 "react-native@npm:0.76.5":
   version: 0.76.5

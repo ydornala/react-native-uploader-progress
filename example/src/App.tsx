@@ -1,24 +1,22 @@
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import {
-  add,
   getFileInfo,
-  multiply,
   startUpload,
   addListener,
 } from 'react-native-uploader-progress';
 import * as ImagePicker from 'react-native-image-picker';
-
-const result = multiply(3, 7);
-const result2 = add(3, 17);
+import uuid from 'react-native-uuid';
+import { useState } from 'react';
+import Card from './Card';
 
 export default function App() {
-  const handleLoadImages = async () => {
-    const media = await ImagePicker.launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 30,
-    });
+  const [media, setMedia] = useState<Array<any> | undefined>([]);
+  const [progressMap, setProgressMap] = useState([]);
 
-    media?.assets?.forEach((asset) => {
+  const handleUpload = () => {
+    media?.forEach((asset: any) => {
       getFileInfo(asset.originalPath || '').then(() => {
         startUpload({
           url: 'https://335b-103-211-43-38.ngrok-free.app/upload',
@@ -26,38 +24,78 @@ export default function App() {
           method: 'POST',
           type: 'multipart',
           field: 'file',
-          notification: {
-            enabled: false,
-            autoClear: true,
-          },
+          customUploadId: asset.customUploadId,
         }).then((uploadId) => {
-          console.log('res upload: ', uploadId);
           addListener('progress', uploadId, (progress: number) => {
-            console.log('progress: ', uploadId, progress);
+            setProgressMap((prev) => ({
+              ...prev,
+              [uploadId]: progress,
+            }));
           });
 
-          addListener('completed', uploadId, (res: any) => {
-            console.log('completed: ', uploadId, res);
+          addListener('completed', uploadId, () => {
+            // Remove uploaded asset from media
+            setMedia((prevMedia) =>
+              prevMedia?.filter((m) => m.customUploadId !== uploadId)
+            );
+
+            // Cleanup progress bar
+            // setProgressMap((prev) => {
+            //   const updatedProgress = { ...prev };
+            //   delete updatedProgress[uploadId];
+            //   return updatedProgress;
+            // });
           });
         });
       });
     });
   };
 
+  const handleLoadImages = async () => {
+    const imageLibrary = await ImagePicker.launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 30,
+    });
+
+    setMedia(
+      imageLibrary.assets?.map((a) => ({ ...a, customUploadId: uuid.v4() }))
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
-      <Text>Result Add: {result2}</Text>
-      <Pressable onPress={handleLoadImages} style={styles.loadImagesButton}>
-        <Text>Load Images</Text>
-      </Pressable>
+      <ScrollView
+        horizontal
+        style={{
+          backgroundColor: '#eee',
+          marginVertical: 25,
+        }}
+      >
+        <View style={{ flexDirection: 'row', gap: 25 }}>
+          {media?.map((asset: any, i: number) => {
+            const pm = progressMap[asset.customUploadId] || { progress: 0 };
+            return <Card path={asset.uri} progress={(pm.progress / 100)} key={i} />;
+          })}
+        </View>
+      </ScrollView>
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <Pressable onPress={handleLoadImages} style={styles.loadImagesButton}>
+          <Text>Load Images</Text>
+        </Pressable>
+        <Pressable onPress={handleUpload} style={styles.loadImagesButton}>
+          <Text>Upload Images</Text>
+        </Pressable>
+        <Pressable onPress={() => setMedia([])} style={styles.loadImagesButton}>
+          <Text>Clear Images</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

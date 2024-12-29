@@ -44,15 +44,15 @@ class GlobalRequestObserverDelegate(
 
   override fun onProgress(context: Context, uploadInfo: UploadInfo) {
 
-     val progress = uploadInfo.progressPercent
-        val notification = NotificationCompat.Builder(context, "UploadChannel")
-            .setContentTitle("Uploading...")
-            .setContentText("$progress% uploaded")
-            .setSmallIcon(android.R.drawable.stat_sys_upload)
-            .setProgress(100, progress, false)
-            .build()
-    notificationManager.notify(uploadInfo.uploadId.hashCode(), notification)
-
+    //  val progress = uploadInfo.progressPercent
+    //     val notification = NotificationCompat.Builder(context, "BackgroundUploadChannel")
+    //         .setContentTitle("Uploading...")
+    //         .setContentText("$progress% uploaded")
+    //         .setSmallIcon(android.R.drawable.stat_sys_upload)
+    //         .setProgress(100, progress, false)
+    //         .build()
+    // notificationManager.notify(uploadInfo.uploadId.hashCode(), notification)
+    Log.e(TAG, "onProgress upload info: ${uploadInfo}")
     val params = Arguments.createMap()
     params.putString("id", uploadInfo.uploadId)
     params.putInt("progress", uploadInfo.progressPercent)
